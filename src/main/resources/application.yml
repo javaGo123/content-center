@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: content-center
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080
+        port: 9020
+      #取消Sentinel控制台懒加载
+      eager: false
+      datasource:
+        flow:
+          nacos:
+            server-addr: localhost:8848
+            dataId: ${spring.application.name}-flow-rules
+            groupId: SENTINEL_GROUP
+            # 规则类型，取值见：
+            # org.springframework.cloud.alibaba.sentinel.datasource.RuleType
+            rule-type: flow
+          degrade:
+            nacos:
+              server-addr: localhost:8848
+              dataId: ${spring.application.name}-degrade-rules
+              groupId: SENTINEL_GROUP
+              rule-type: degrade
+          system:
+            nacos:
+              server-addr: localhost:8848
+              dataId: ${spring.application.name}-system-rules
+              groupId: SENTINEL_GROUP
+              rule-type: system
+          authority:
+            nacos:
+              server-addr: localhost:8848
+              dataId: ${spring.application.name}-authority-rules
+              groupId: SENTINEL_GROUP
+              rule-type: authority
+          param-flow:
+            nacos:
+              server-addr: localhost:8848
+              dataId: ${spring.application.name}-param-flow-rules
+              groupId: SENTINEL_GROUP
+              rule-type: param-flow
+
+
+server:
+  port: 9003
+
+logging:
+  level:
+    com.evoa.cloud.contentcenter: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+feign:
+  sentinel:
+    enabled: true
