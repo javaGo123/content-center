@@ -45,6 +45,12 @@ spring:
             dataId: ${spring.application.name}-param-flow-rules
             groupId: SENTINEL_GROUP
             rule-type: param-flow
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    discovery-client-enabled: false
+  sleuth:
+    sampler:
+      probability: 1.0
 
 server:
   port: 9003
@@ -52,6 +58,7 @@ server:
 logging:
   level:
     com.evoa.cloud.contentcenter: debug
+    org.springframework.cloud.sleuth: debug
 
 management:
   endpoints:
@@ -61,3 +68,4 @@ management:
 feign:
   sentinel:
     enabled: true
+
